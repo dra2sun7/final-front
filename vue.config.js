@@ -9,4 +9,3 @@ module.exports = {
     proxy: 'http://localhost:8080' // 서버 프로젝트 포트번호와 동일할 것
   },
 };
-  
