@@ -1,6 +1,6 @@
 module.exports = {
   transpileDependencies: ['vue'],
-  
+
   // npm run build 타겟 디렉토리 -> 해당 경로에 Vue 빌드 출력물 생성됨
   outputDir: '../backend/src/main/resources/static',
 
