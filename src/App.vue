@@ -10,14 +10,22 @@
     <div class="container"><div class="text-box">
       <p v-for="message in logMessage" :key="message" v-html="formatLogMessage(message)"></p>
     </div></div><button type="button" class="btn btn-primary" style="margin-top: 10px;" @click="flag=false">닫기</button></div>
-    
   <div>
     <router-link to="/" class="header-link">
     <h1>KCS2</h1>
-    <h4>Kubernetes Client Scanner Service</h4>
+    <h4>Kubernetes Cluster Security Scanner</h4>
     </router-link>
   </div>
-  <div>
+
+  <div id='menu1'>
+    <ul>
+      <li><a href='#' @click="showAbout">소개</a></li>
+      <li><a href='#'>기술 스택</a></li>
+      <li><a href='#' @click="showSystem">MENU4</a></li>
+    </ul>
+  </div>
+
+  <div v-if="usingSystem">
     <h4 style="margin-right: 5px; margin-top: 100px;">URL</h4>
     <p><input type="text" style="width: 30%; height: 30px; font-size: 15px;" v-model="apiServer" autocomplete="off" placeholder="URL을 입력하세요"></p>
     <h4 style="margin-right: 5px;">Token</h4>
@@ -37,13 +45,24 @@ export default {
     return {
       inputText : "각각의 NODE에 대한 LOG",
       logMessage : [],
+      usingSystem : false,
+      usingAbout : false,
       flag : false,
       isLoading : false,
       apiServer : '',
-      token : '',
+      token : ''
     }
   },
   methods: {
+    showAbout() {
+      this.usingSystem = false;
+      this.usingAbout = true;
+      
+    },
+    showSystem() {
+      this.usingAbout = false;
+      this.usingSystem = true;
+    },
     formatLogMessage(rawLog) {
       // Process the log message here, such as adding line breaks or other formatting
       const formattedLog = rawLog.replace(/\n/g, '<br>'); // Replace line breaks with <br> tags
@@ -53,7 +72,7 @@ export default {
         // Data to send to the backend
       this.isLoading = true;
       const data = { apiServer: this.apiServer, token: this.token };
-      axios.post('http://kcs2.co.kr:8080/api/runCurl', data)
+      axios.post('http://www.kcs2.co.kr:8080/api/runCurl', data)
            .then(response => {
           // Handle the response from the backend
               this.logMessage = response.data;
@@ -75,8 +94,10 @@ export default {
 </script>
 
 <style>
+@charset "utf-8";
+
 body{
-  margin : 0
+  font: 17px 'Nanum Gothic', sans-serif;
 }
 div {
   box-sizing: border-box;
@@ -92,10 +113,46 @@ div {
   padding: 20px;
 }
 
-.room-img{
-  width: 30%;
-  margin-top: 40px;
+#menu1 {
+  background: #99CCFF;
+  margin-top: 250px;
 }
+#menu1 ul {
+  width: 1000px;
+  margin: 0 auto;
+  overflow: hidden;
+  list-style: none; /* Remove the default bullet points */
+  display: flex; /* Use flexbox to create a horizontal layout */
+  justify-content: center; /* Center the list items horizontally */
+
+}
+#menu1 li {
+  margin: 0 60px; /* Add spacing between list items */
+}
+#menu ul li {
+  display: inline-block;
+  width: 25%;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  background: #99CCFF;
+}
+#menu1 ul li a {
+  display: block;
+  font-size: 40px;
+  transition: font-size 0.3s; /* Add a smooth transition effect for font size */
+}
+#menu1 ul li a:hover {
+  font-size: 50px;
+  background: #0EB4FC;
+  color: #f0f0f0;
+}
+#menu1 a {
+    text-decoration: none; /* Remove underline from links */
+    font-weight: bold; /* Adjust font weight as needed */
+  font-size: 16px; /* Adjust font size as needed */
+}
+
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -104,16 +161,6 @@ div {
   text-align: center;
   color: #2c3e50;
   margin-top: 20px;
-}
-
-.menu {
-  background: darkslateblue;
-  padding: 15px;
-  border-radius: 5px;
-}
-.menu a {
-  color: white;
-  padding: 10px;
 }
 .text-box {
   border: 1px solid #ccc; /* Add a border */
