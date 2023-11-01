@@ -72,7 +72,7 @@ export default {
         // Data to send to the backend
       this.isLoading = true;
       const data = { apiServer: this.apiServer, token: this.token };
-      axios.post('http://www.kcs2.co.kr:8080/api/runCurl', data)
+      axios.post('http://www.kcs2.co.kr/api/runCurl', data)
            .then(response => {
           // Handle the response from the backend
               this.logMessage = response.data;
