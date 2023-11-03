@@ -1,23 +1,23 @@
 
 <template>
+  
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
   <div class="black-bg" v-if="isLoading==true"><div class="container">
   <div class="spinner" style="margin-top: 250px;"></div>
   </div></div>
-
 
     <div class="black-bg" v-if="flag==true">
     <div class="container"><div class="text-box">
       <p v-for="message in logMessage" :key="message" v-html="formatLogMessage(message)"></p>
     </div></div><button type="button" class="btn btn-primary" style="margin-top: 10px;" @click="flag=false">닫기</button></div>
   <div>
-    <router-link to="/" class="header-link">
+    <router-link to="/" class="header-link" @click="toTheHome">
     <h1>KCS2</h1>
     <h4>Kubernetes Cluster Security Scanner</h4>
     </router-link>
   </div>
 
-  <div id='menu1'>
+  <div id='menu1' :style="{ marginTop: menuMarginTop + 'px' }">
     <ul>
       <li><a href='#' @click="showAbout">소개</a></li>
       <li><a href='#'>기술 스택</a></li>
@@ -26,12 +26,15 @@
   </div>
 
   <div v-if="usingSystem">
-    <h4 style="margin-right: 5px; margin-top: 100px;">URL</h4>
-    <p><input type="text" style="width: 30%; height: 30px; font-size: 15px;" v-model="apiServer" autocomplete="off" placeholder="URL을 입력하세요"></p>
+  <h4 style="margin-right: 5px; margin-top: 100px;">URL</h4>
+  <div class="input-group">
+    <p><input type="text" v-model="apiServer" autocomplete="off" placeholder="URL을 입력하세요"></p>
+  </div>
     <h4 style="margin-right: 5px;">Token</h4>
-    <p><input type= "password" style="width: 30%; height: 30px; font-size: 15px;" v-model="token" placeholder="Token을 입력하세요"></p>
-    <button type="button" class="btn btn-primary" @click="sendDataToBackend">Primary</button>
-
+  <div class="input-group">
+    <p><input type= "password" v-model="token" placeholder="Token을 입력하세요"></p>
+  </div>
+  <button type="button" class="btn btn-primary" @click="sendDataToBackend">Primary</button>
   </div>
 </template>
 
@@ -50,18 +53,37 @@ export default {
       flag : false,
       isLoading : false,
       apiServer : '',
-      token : ''
+      token : '',
+      menuMarginTop: 250,
     }
   },
   methods: {
+    toTheHome() {
+      this.usingSystem = false;
+      this.usingAbout = false;
+      this.flag = false;
+      this.isLoading = false;
+      this.apiServer = '';
+      this.token = '';
+      this.menuMarginTop = 250;
+      this.isMenuUp = false;
+      this.currentComponent = null;
+    },
     showAbout() {
+      this.moveMenu();
       this.usingSystem = false;
       this.usingAbout = true;
-      
     },
     showSystem() {
+      this.moveMenu();
       this.usingAbout = false;
       this.usingSystem = true;
+    },
+    moveMenu() {
+      if (!this.isMenuUp){
+        this.menuMarginTop = 20;
+        this.isMenuUp = true;
+      }
     },
     formatLogMessage(rawLog) {
       // Process the log message here, such as adding line breaks or other formatting
@@ -113,9 +135,18 @@ div {
   padding: 20px;
 }
 
+
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 20px;
+}
 #menu1 {
   background: #99CCFF;
-  margin-top: 250px;
+  transition: margin-top 0.5s;
 }
 #menu1 ul {
   width: 1000px;
@@ -153,31 +184,12 @@ div {
   font-size: 16px; /* Adjust font size as needed */
 }
 
-
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 20px;
+.header-link h1,
+.header-link h4 {
+  display: inline;
+  margin-right: 15px;
 }
-.text-box {
-  border: 1px solid #ccc; /* Add a border */
-  padding: 10px; /* Add some padding */
-  background-color: #f0f0f0; /* Set a background color */
-  border-radius: 5px; /* Add rounded corners */
-  margin-top: 10px; /* Adjust margin for spacing */
 
-  width: 1300px;
-  height: 600px;
-  
-  overflow-y: scroll;
-  overflow-x: hidden;
-
-  text-align: left;
-  white-space: pre-line;
-}
 .container {
   display: flex;
   justify-content: center; /* Center horizontally */
@@ -202,6 +214,38 @@ div {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
+
+.text-box { 
+  border: 3px solid #3498db; /* Add a border */
+  padding: 10px; /* Add some padding */
+  background-color: #f0f0f0; /* Set a background color */
+  border-radius: 5px; /* Add rounded corners */
+  margin-top: 10px; /* Adjust margin for spacing */
+
+  width: 1300px;
+  height: 600px;
+  
+  overflow-y: scroll;
+  overflow-x: hidden;
+
+  text-align: left;
+  white-space: pre-line;
+}
+
+.input-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.input-group input {
+  border: 3px solid #ccc;
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 50px;
+}
+
 a {
   color: inherit; /* Use the default text color */
   text-decoration: none; /* Remove underline */
