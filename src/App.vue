@@ -44,6 +44,9 @@ import axios from 'axios'
 
 export default {
   name: 'App',
+  created() {
+    document.title = 'KCS2'
+  },
   data(){
     return {
       inputText : "각각의 NODE에 대한 LOG",
@@ -128,24 +131,19 @@ div {
   width: 100%; height: 100%;
   background: rgba(0,0,0,0.5);
   position: fixed; padding: 20px;
+  order: -1;
 }
-.white-bg{
-  width: 100%; background: white;
-  border-radius: 8px;
-  padding: 20px;
-}
-
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #2a2a2a;
   margin-top: 20px;
 }
 #menu1 {
-  background: #99CCFF;
+  background: #000;
   transition: margin-top 0.5s;
 }
 #menu1 ul {
@@ -166,28 +164,31 @@ div {
   height: 50px;
   line-height: 50px;
   text-align: center;
-  background: #99CCFF;
+  background: #000;
 }
 #menu1 ul li a {
   display: block;
   font-size: 40px;
   transition: font-size 0.3s; /* Add a smooth transition effect for font size */
+  color: rgb(255, 255, 255);
 }
 #menu1 ul li a:hover {
   font-size: 50px;
-  background: #0EB4FC;
+  background: rgb(77, 77, 77);
   color: #f0f0f0;
 }
 #menu1 a {
-    text-decoration: none; /* Remove underline from links */
-    font-weight: bold; /* Adjust font weight as needed */
+  text-decoration: none; /* Remove underline from links */
+  font-weight: bold; /* Adjust font weight as needed */
   font-size: 16px; /* Adjust font size as needed */
 }
 
 .header-link h1,
 .header-link h4 {
+  text-decoration: none;
   display: inline;
   margin-right: 15px;
+  color: rgb(83, 83, 83);
 }
 
 .container {
@@ -203,7 +204,7 @@ div {
 }
 .spinner {
     border: 8px solid rgba(0, 0, 0, 0.1);
-    border-left: 8px solid #3498db;
+    border-left: 8px solid #000000;
     border-radius: 100%;
     width: 80px;
     height: 80px;
@@ -216,7 +217,7 @@ div {
   }
 
 .text-box { 
-  border: 3px solid #3498db; /* Add a border */
+  border: 3px solid #333333; /* Add a border */
   padding: 10px; /* Add some padding */
   background-color: #f0f0f0; /* Set a background color */
   border-radius: 5px; /* Add rounded corners */
@@ -235,7 +236,7 @@ div {
 .input-group {
   display: flex;
   justify-content: center;
-  align-items: center;
+  lign-items: center;
   margin-bottom: 10px;
 }
 
@@ -243,7 +244,8 @@ div {
   border: 3px solid #ccc;
   padding: 10px;
   background-color: #fff;
-  border-radius: 50px;
+  border-radius: 5px;
+  width: 600px;
 }
 
 a {
