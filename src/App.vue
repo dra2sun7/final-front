@@ -2,11 +2,11 @@
 <template>
   
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-  <div class="black-bg" v-if="isLoading==true"><div class="container">
+  <div class="black-bg" v-if="isLoading==true" style="z-index: 1;"><div class="container">
   <div class="spinner" style="margin-top: 250px;"></div>
   </div></div>
 
-    <div class="black-bg" v-if="flag==true">
+    <div class="black-bg" v-if="flag==true" style="z-index: 1;">
     <div class="container"><div class="text-box">
       <p v-for="message in logMessage" :key="message" v-html="formatLogMessage(message)"></p>
     </div></div><button type="button" class="btn btn-primary" style="margin-top: 10px;" @click="flag=false">닫기</button></div>
@@ -19,13 +19,23 @@
 
   <div id='menu1' :style="{ marginTop: menuMarginTop + 'px' }">
     <ul>
-      <li><a href='#' @click="showAbout">소개</a></li>
-      <li><a href='#'>기술 스택</a></li>
-      <li><a href='#' @click="showSystem">MENU4</a></li>
+      <li><a href='#' @click="showAbout">Introduce</a></li>
+      <li><a href='#' @click="showSystem">Solution</a></li>
     </ul>
   </div>
 
-  <div v-if="usingSystem">
+  <div style="background-color: gray; width: 100%; height: 1300px;" ref="stage1">
+    <h3>
+      <p style="margin-bottom: 100px">&nbsp;</p>
+      <p style="margin-bottom: 20px">KCS2 (Kubernetes Cluster Security Scanner)는</p>
+      <p>쿠버네티스 클러스터의 컴포넌트 리소스의 보안점검을 위한 도구입니다</p>
+    </h3>
+    <img src="@/assets/image1.png" class="image1">
+    <img src="@/assets/image2.png" class="image2">
+  </div>
+
+  <div>
+  <h1 style="margin-top: 20px;" ref="stage3">Solution</h1>
   <h4 style="margin-right: 5px; margin-top: 100px;">URL</h4>
   <div class="input-group">
     <p><input type="text" v-model="apiServer" autocomplete="off" placeholder="URL을 입력하세요"></p>
@@ -34,7 +44,7 @@
   <div class="input-group">
     <p><input type= "password" v-model="token" placeholder="Token을 입력하세요"></p>
   </div>
-  <button type="button" class="btn btn-primary" @click="sendDataToBackend">Primary</button>
+  <button type="button" class="btn btn-primary" @click="sendDataToBackend" style="margin-bottom: 480px">Primary</button>
   </div>
 </template>
 
@@ -73,20 +83,14 @@ export default {
       this.currentComponent = null;
     },
     showAbout() {
-      this.moveMenu();
+      this.$refs.stage1.scrollIntoView({ behavior: "smooth"});
       this.usingSystem = false;
       this.usingAbout = true;
     },
     showSystem() {
-      this.moveMenu();
+      this.$refs.stage3.scrollIntoView({ behavior: "smooth"});
       this.usingAbout = false;
       this.usingSystem = true;
-    },
-    moveMenu() {
-      if (!this.isMenuUp){
-        this.menuMarginTop = 20;
-        this.isMenuUp = true;
-      }
     },
     formatLogMessage(rawLog) {
       // Process the log message here, such as adding line breaks or other formatting
@@ -189,6 +193,9 @@ div {
   display: inline;
   margin-right: 15px;
   color: rgb(83, 83, 83);
+  display: inline;
+  margin-right: 15px;
+
 }
 
 .container {
@@ -197,11 +204,20 @@ div {
   align-items: center; /* Center vertically */
   /* height: 50vh;  Optional: Make the container full height of the viewport */
 }
-.header-link h1,
-.header-link h4 {
-  display: inline;
-  margin-right: 15px;
+
+.image1 {
+  margin-right: 600px;
+  width: 50%; /* 원하는 너비에 맞게 조정 가능 */
+  height: auto; /* 가로:세로 비율을 유지 */
 }
+
+.image2 {
+  margin-top: 50px;
+  margin-left: 600px;
+  width: 50%; /* 원하는 너비에 맞게 조정 가능 */
+  height: auto; /* 가로:세로 비율을 유지 */
+}
+
 .spinner {
     border: 8px solid rgba(0, 0, 0, 0.1);
     border-left: 8px solid #000000;
@@ -236,7 +252,6 @@ div {
 .input-group {
   display: flex;
   justify-content: center;
-  lign-items: center;
   margin-bottom: 10px;
 }
 
