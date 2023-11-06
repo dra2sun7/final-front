@@ -3,7 +3,7 @@
   
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
   <div class="black-bg" v-if="isLoading==true" style="z-index: 1;"><div class="container">
-  <div class="spinner" style="margin-top: 250px;"></div>
+  <div class="spinner" style="margin-top: 20px;"></div>
   </div></div>
 
     <div class="black-bg" v-if="flag==true" style="z-index: 1;">
@@ -27,15 +27,15 @@
   <div style="background-color: gray; width: 100%; height: 1300px;" ref="stage1">
     <h3>
       <p style="margin-bottom: 100px">&nbsp;</p>
-      <p style="margin-bottom: 20px">KCS2 (Kubernetes Cluster Security Scanner)는</p>
-      <p>쿠버네티스 클러스터의 컴포넌트 리소스의 보안점검을 위한 도구입니다</p>
+      <strong><p style="margin-bottom: 20px">KCS2 (Kubernetes Cluster Security Scanner)는</p>
+      <p style="margin-bottom: 100px" >쿠버네티스 클러스터의 컴포넌트 및 리소스의 보안점검을 위한 도구입니다</p></strong>
     </h3>
     <img src="@/assets/image1.png" class="image1">
     <img src="@/assets/image2.png" class="image2">
   </div>
 
   <div>
-  <h1 style="margin-top: 20px;" ref="stage3">Solution</h1>
+  <h1 style="margin-top: 40px;" ref="stage3">Solution</h1>
   <h4 style="margin-right: 5px; margin-top: 100px;">URL</h4>
   <div class="input-group">
     <p><input type="text" v-model="apiServer" autocomplete="off" placeholder="URL을 입력하세요"></p>
@@ -67,7 +67,7 @@ export default {
       isLoading : false,
       apiServer : '',
       token : '',
-      menuMarginTop: 250,
+      menuMarginTop: 40,
     }
   },
   methods: {
@@ -78,7 +78,7 @@ export default {
       this.isLoading = false;
       this.apiServer = '';
       this.token = '';
-      this.menuMarginTop = 250;
+      this.menuMarginTop = 40;
       this.isMenuUp = false;
       this.currentComponent = null;
     },
@@ -134,7 +134,7 @@ div {
 .black-bg{
   width: 100%; height: 100%;
   background: rgba(0,0,0,0.5);
-  position: fixed; padding: 20px;
+  position: fixed;
   order: -1;
 }
 
@@ -144,7 +144,7 @@ div {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2a2a2a;
-  margin-top: 20px;
+  margin-top: 40px;
 }
 #menu1 {
   background: #000;
