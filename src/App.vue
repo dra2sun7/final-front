@@ -24,7 +24,7 @@
     </ul>
   </div>
 
-  <div style="background-color: gray; width: 100%; height: 1300px;" ref="stage1">
+  <div style="background-color: gray; width: 100%; height: 1700px;" ref="stage1">
     <h3>
       <p style="margin-bottom: 100px">&nbsp;</p>
       <strong><p style="margin-bottom: 20px">KCS2 (Kubernetes Cluster Security Scanner)는</p>
