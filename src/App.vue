@@ -126,8 +126,8 @@ export default {
       axios.post('http://www.kcs2.co.kr/api/runCurl', data)
            .then(response => {
           // Handle the response from the backend
-              this.logMessage = response.data;
-           })
+          this.logMessage = response.data;
+        })
            .catch(error => {
             // Handle any errors
               console.error(error);
