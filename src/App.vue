@@ -1,50 +1,72 @@
-
 <template>
-  
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-  <div class="black-bg" v-if="isLoading==true" style="z-index: 1;"><div class="container">
-  <div class="spinner" style="margin-top: 20px;"></div>
-  </div></div>
+  <div>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
+    <div class="black-bg" v-if="isLoading==true" style="z-index: 1;">
+      <div class="container">
+        <div class="spinner" style="margin-top: 20px;"></div>
+      </div>
+    </div>
 
     <div class="black-bg" v-if="flag==true" style="z-index: 1;">
-    <div class="container"><div class="text-box">
-      <p v-for="message in logMessage" :key="message" v-html="formatLogMessage(message)"></p>
-    </div></div><button type="button" class="btn btn-primary" style="margin-top: 10px;" @click="flag=false">닫기</button></div>
-  <div>
-    <router-link to="/" class="header-link" @click="toTheHome">
-    <h1>KCS2</h1>
-    <h4>Kubernetes Cluster Security Scanner</h4>
-    </router-link>
-  </div>
+      <div class="container">
+        <div class="text-box">
+          <p v-for="message in logMessage" :key="message" v-html="formatLogMessage(message)"></p>
+        </div>
+      </div>
+      <!-- <button type="button" class="btn btn-primary" style="margin-top: 10px;" @click="flag=false">닫기</button> -->
+      <button type="button" class="btn btn-primary" style="margin-top: 10px;" @click="flag=false">닫기</button>
+    </div>
 
-  <div id='menu1' :style="{ marginTop: menuMarginTop + 'px' }">
-    <ul>
-      <li><a href='#' @click="showAbout">Introduce</a></li>
-      <li><a href='#' @click="showSystem">Solution</a></li>
-    </ul>
-  </div>
+    <div>
+      <router-link to="/" class="header-link" @click="toTheHome">
+        <h1 style="font-size: 4em;">KCS2</h1>
+        <h4 style="font-size: 2em;">Kubernetes Cluster Security Scanner</h4>
+      </router-link>
+    </div>
 
-  <div style="background-color: gray; width: 100%; height: 1700px;" ref="stage1">
-    <h3>
-      <p style="margin-bottom: 100px">&nbsp;</p>
-      <strong><p style="margin-bottom: 20px">KCS2 (Kubernetes Cluster Security Scanner)는</p>
-      <p style="margin-bottom: 100px" >쿠버네티스 클러스터의 컴포넌트 및 리소스의 보안점검을 위한 도구입니다</p></strong>
-    </h3>
-    <img src="@/assets/image1.png" class="image1">
-    <img src="@/assets/image2.png" class="image2">
-  </div>
+    <div id='menu1' style="background-color: MidnightBlue;" :style="{ marginTop: menuMarginTop + 'px' }">
+      <ul>
+        <li><a href='#' @click="showAbout">Introduce</a></li>
+        <li><a href='#' @click="showSystem">Solution</a></li>
+      </ul>
+    </div>
 
-  <div>
-  <h1 style="margin-top: 40px;" ref="stage3">Solution</h1>
-  <h4 style="margin-right: 5px; margin-top: 100px;">URL</h4>
-  <div class="input-group">
-    <p><input type="text" v-model="apiServer" autocomplete="off" placeholder="URL을 입력하세요"></p>
-  </div>
-    <h4 style="margin-right: 5px;">Token</h4>
-  <div class="input-group">
-    <p><input type= "password" v-model="token" placeholder="Token을 입력하세요"></p>
-  </div>
-  <button type="button" class="btn btn-primary" @click="sendDataToBackend" style="margin-bottom: 480px">Primary</button>
+    <div style="background-color: LightSkyBlue; width: 100%; height: 1900px;" ref="stage1">
+      <h3>
+        <p style="margin-bottom: 100px">&nbsp;</p>
+        <strong>
+          <p style="margin-bottom: 20px; color: white; font-size: 1.3em;">KCS2 (Kubernetes Cluster Security Scanner)는</p>
+          <p style="margin-bottom: 100px; color: white; font-size: 1.3em;">쿠버네티스 클러스터의 컴포넌트 및 리소스의 보안점검을 위한 도구입니다</p>
+        </strong>
+      </h3>      
+      <img style="margin-bottom: 100px;" src="@/assets/image2.png" class="image2">
+      <strong><p style="margin-bottom: 100px; font-size: 2em; color: white;">
+        인터넷 보안 센터(CIS)의 CIS 벤치마크 기준에 따라 클러스터를 점검합니다
+      </p></strong>
+
+      <img src="@/assets/image1.png" class="image1">
+      <p style="margin-bottom: 100px"></p>
+      <strong><p style="margin-bottom: 200px; color: white; font-size: 2em;">
+        저희 서비스를 통해서 Kubernetes Operator는<br>
+        현재 Kubernetes Cluster의 보안 수준에 대해 빠르고 쉽게 점검할 수 있습니다
+      </p></strong>
+    </div>
+
+    <div style="background-color: LightSkyBlue; height: 1000px">
+      <div style="background-color: white; padding: 20px; border-radius: 8px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); width: 800px; height: 400px; margin: 0 auto;">
+        <h1 style="font-size: 3em;" ref="stage3">Solution</h1>
+        <h4 style="margin-right: 5px;">URL</h4>
+        <div class="input-group">
+          <p><input type="text" v-model="apiServer" autocomplete="off" placeholder="URL을 입력하세요"></p>
+        </div>
+        <h4 style="margin-right: 5px;">Token</h4>
+        <div class="input-group">
+          <p><input type="password" v-model="token" placeholder="Token을 입력하세요"></p>
+        </div>
+        <button type="button" class="btn btn-primary" @click="sendDataToBackend" style="margin-bottom: 50px">Primary</button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -131,11 +153,25 @@ body{
 div {
   box-sizing: border-box;
 }
-.black-bg{
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.5);
+
+.top-background {
   position: fixed;
-  order: -1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px; /* Adjust height as needed */
+  background-color: LightSkyBlue;
+  z-index: 1; /* Make sure it is below black-bg */
+}
+
+.black-bg {
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0; /* Add this to ensure it stays at the top */
+  left: 0; /* Add this to ensure it spans the full width */
+  z-index: 999; /* Ensure it appears above other elements */
 }
 
 #app {
@@ -206,14 +242,14 @@ div {
 }
 
 .image1 {
-  margin-right: 600px;
+  margin-right: 300px;
   width: 50%; /* 원하는 너비에 맞게 조정 가능 */
   height: auto; /* 가로:세로 비율을 유지 */
 }
 
 .image2 {
   margin-top: 50px;
-  margin-left: 600px;
+  margin-left: 300px;
   width: 50%; /* 원하는 너비에 맞게 조정 가능 */
   height: auto; /* 가로:세로 비율을 유지 */
 }
@@ -261,6 +297,18 @@ div {
   background-color: #fff;
   border-radius: 5px;
   width: 600px;
+}
+
+.scroll-container {
+  background-color: gray;
+  width: 100%;
+  height: 1700px;
+  position: relative;
+  overflow: hidden;
+}
+
+.image1, .image2 {
+  height: auto; 
 }
 
 a {
