@@ -8,6 +8,9 @@
     <div class="menu-box">
       <a href="#" @click="$emit('show-system')">Solution</a>
     </div>
+    <div class="menu-box">
+      <a href="#" @click="$emit('show-websocket')">WebSocket</a>
+    </div>
   </div>
 </template>
 

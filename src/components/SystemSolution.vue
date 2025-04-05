@@ -29,20 +29,43 @@ export default {
     };
   },
   methods: {
-    sendDataToBackend() {
+  //   sendDataToBackend() {
+  //     this.$emit('start-loading');
+  //     axios.post('http://localhost:8080/api/runCurl', {
+  //       apiServer: this.apiServer,
+  //       token: this.token
+  //     })
+  //     .then(response => {
+  //       this.$emit('update-log', response.data);
+  //     })
+  //     .catch(error => {
+  //       console.error(error);
+  //     })
+  //     .finally(() => {
+  //       this.$emit('stop-loading');
+  //     });
+  //   }
+      sendDataToBackend() {
       this.$emit('start-loading');
       axios.post('http://localhost:8080/api/runCurl', {
         apiServer: this.apiServer,
         token: this.token
       })
       .then(response => {
-        this.$emit('update-log', response.data);
+        // 결과가 없는 경우에도 대응
+        const result = response.data;
+        if (!result || result.length === 0) {
+          this.$emit('update-log', []);
+        } else {
+          this.$emit('update-log', Array.isArray(result) ? result : [result]);
+        }
       })
       .catch(error => {
         console.error(error);
+        this.$emit('update-log', ['오류가 발생했습니다: ' + error.message]);
       })
       .finally(() => {
-        this.$emit('stop-loading');
+        this.$emit('stop-loading');  // 여기서 flag = true 처리됨
       });
     }
   }

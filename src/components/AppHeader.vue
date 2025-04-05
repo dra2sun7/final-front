@@ -12,7 +12,12 @@
         </div>
       </router-link>
     </div>
-    <MenuBar :menuMarginTop="menuMarginTop" @show-about="$emit('show-about')" @show-system="$emit('show-system')" />
+    <MenuBar 
+      :menuMarginTop="menuMarginTop"
+      @show-about="$emit('show-about')"
+      @show-system="$emit('show-system')"
+      @show-websocket="$emit('show-websocket')"
+    />
   </div>
 </template>
 
