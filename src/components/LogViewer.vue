@@ -13,7 +13,16 @@
 
 <script>
 export default {
-  props: ['flag', 'logMessage'],
+  props: {
+    flag: {
+      type: Boolean,
+      required: true
+    },
+    logMessage: {
+      type: Array,
+      default: () => []  // 기본값: 빈 배열
+    }
+  },
   methods: {
     formatLogMessage(rawLog) {
       return rawLog.replace(/\n/g, '<br>');

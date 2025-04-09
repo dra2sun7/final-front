@@ -15,58 +15,53 @@
     </div>
 
     <button class="submit-button" @click="sendDataToBackend">보안 점검 시작</button>
+
+    <!-- 로그 뷰어 보여주기 -->
+    <!-- <LogViewer
+      :flag="showLogViewer"
+      :logMessage="logMessages"
+      @close-log="handleCloseLog"
+    /> -->
   </div>
 </template>
 
 <script>
 import axios from 'axios';
+// import LogViewer from './LogViewer.vue'
 
 export default {
+  // components: { LogViewer },
   data() {
     return {
+      showLogViewer: false,
       apiServer: '',
-      token: ''
+      token: '',
+      logMessage: []
     };
   },
   methods: {
-  //   sendDataToBackend() {
-  //     this.$emit('start-loading');
-  //     axios.post('http://localhost:8080/api/runCurl', {
-  //       apiServer: this.apiServer,
-  //       token: this.token
-  //     })
-  //     .then(response => {
-  //       this.$emit('update-log', response.data);
-  //     })
-  //     .catch(error => {
-  //       console.error(error);
-  //     })
-  //     .finally(() => {
-  //       this.$emit('stop-loading');
-  //     });
-  //   }
-      sendDataToBackend() {
-      this.$emit('start-loading');
+    sendDataToBackend() {
+      this.$emit('start-loading'); // 로딩 시작
+
       axios.post('http://localhost:8080/api/runCurl', {
         apiServer: this.apiServer,
         token: this.token
       })
       .then(response => {
-        // 결과가 없는 경우에도 대응
         const result = response.data;
-        if (!result || result.length === 0) {
-          this.$emit('update-log', []);
-        } else {
-          this.$emit('update-log', Array.isArray(result) ? result : [result]);
-        }
+        const logs = (!result || result.length === 0) ? [] : (Array.isArray(result) ? result : [result]);
+        this.$emit('update-log', logs);  // 👉 부모에게 로그 전달
       })
       .catch(error => {
-        console.error(error);
         this.$emit('update-log', ['오류가 발생했습니다: ' + error.message]);
       })
       .finally(() => {
-        this.$emit('stop-loading');  // 여기서 flag = true 처리됨
+        this.$emit('stop-loading'); // 로딩 끝
       });
+    },
+    handleCloseLog() {
+      this.showLogViewer = false;
+      this.$emit('stop-loading'); // 혹시 열려있던 로딩도 같이 종료
     }
   }
 }

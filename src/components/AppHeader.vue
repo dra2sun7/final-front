@@ -16,8 +16,10 @@
       :menuMarginTop="menuMarginTop"
       @show-about="$emit('show-about')"
       @show-system="$emit('show-system')"
-      @show-websocket="$emit('show-websocket')"
+      
     />
+    <!-- 웹소켓 테스트용 -->
+    <!-- @show-websocket="$emit('show-websocket')" -->
   </div>
 </template>
 

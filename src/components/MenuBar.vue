@@ -8,9 +8,10 @@
     <div class="menu-box">
       <a href="#" @click="$emit('show-system')">Solution</a>
     </div>
-    <div class="menu-box">
+    <!-- 웹소켓 테스트용 -->
+    <!-- <div class="menu-box">
       <a href="#" @click="$emit('show-websocket')">WebSocket</a>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -35,7 +36,7 @@ export default {
   gap: 40px;
   margin: 40px auto;
 }
-
+  
 .menu-box {
   background-color: #f5f5f5;
   padding: 16px 32px;
